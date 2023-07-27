@@ -1,8 +1,5 @@
-import sys
-f= sys.stdin.readline
+l = [0]*2
+l[0] = 1
+l[1]= 2
 
-temp = []
-for i in range(3):
-    temp.append(list(map(int,f().split())))
-
-print(temp)
+print(l)
