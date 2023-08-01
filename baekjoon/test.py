@@ -1,6 +1,5 @@
 import sys
-l = list()
+for i in range(3):
+    b = i
 
-a = "abc"
-
-print(list(a))
+print(b)
