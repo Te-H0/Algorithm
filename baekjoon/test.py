@@ -1,8 +1,7 @@
 import sys
 from collections import deque
 
-dq = deque()
-dq.append(1)
-dq.append(2)
-l = [1, 2, 3]
-print(l[0:1])
+
+l = [[False]*3 for i in range(2)]
+l[0][0] = True
+print(l)
