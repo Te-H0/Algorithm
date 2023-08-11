@@ -2,6 +2,7 @@ import sys
 from collections import deque
 
 
-l = [1, 2, 3, 4]
+l = ['223', '1', '2345', '4']
 
-print(1 in l)
+l.sort()
+print(l[0][:1])
