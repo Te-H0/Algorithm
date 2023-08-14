@@ -1,8 +1,14 @@
 import sys
 from collections import deque
+import heapq
 
+heap = []
 
-l = ['223', '1', '2345', '4']
+arr = []
 
-l.sort()
-print(l[0][:1])
+heapq.heappush(heap, 1)
+print(len(heap))
+
+heapq.heappop(heap)
+print(len(heap))
+
