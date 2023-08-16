@@ -1,14 +1,10 @@
 import sys
-from collections import deque
-import heapq
 
-heap = []
+t = int(sys.stdin.readline())
 
-arr = []
+answer = 0
+l = list()
 
-heapq.heappush(heap, 1)
-print(len(heap))
-
-heapq.heappop(heap)
-print(len(heap))
-
+for _ in range(t):
+    a, c, b = map(int, sys.stdin.readline().split())
+    print(a,c,b)
