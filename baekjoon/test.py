@@ -1,10 +1,4 @@
 import sys
-
-t = int(sys.stdin.readline())
-
-answer = 0
-l = list()
-
-for _ in range(t):
-    a, c, b = map(int, sys.stdin.readline().split())
-    print(a,c,b)
+for i in range(2):
+    a = list(map(int, sys.stdin.readline().rstrip()))
+    print(a)
