@@ -1,4 +1,6 @@
 import sys
-for i in range(2):
-    a = list(map(int, sys.stdin.readline().rstrip()))
+from collections import deque
+
+for i in range(3):
+    a = sys.stdin.readline().rstrip()
     print(a)
