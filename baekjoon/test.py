@@ -1,5 +1,6 @@
 import sys
 from collections import deque
-a, b = 0, 0
-b += 1
-print(a, b)
+
+graph = [[]for _ in range(3)]
+graph[0].append((1, 3))
+print(graph)
