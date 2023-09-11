@@ -1,10 +1,9 @@
+import heapq
+from re import L
 import sys
-from collections import deque
+from collections import deque, defaultdict
 from bisect import bisect
 
-
-def a():
-    return 'x'
-
-
-print(a())
+l = [0]*3
+l[0] = 2
+print(l)
