@@ -16,5 +16,5 @@ import itertools
 # # 모든 조합을 출력합니다.
 # for combo in combinations:
 #     print((list(combo)))
-a = '1'
+a = '12'
 print(int(a))
