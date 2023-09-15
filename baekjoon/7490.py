@@ -1,5 +1,3 @@
-from re import T
-from sqlite3 import connect
 import sys
 from itertools import product
 c = int(sys.stdin.readline())
