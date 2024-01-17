@@ -1,40 +1,43 @@
 import sys
-from collections import deque
 
 n = int(sys.stdin.readline())
-status = list(map(int, sys.stdin.readline().rstrip()))
-goal = list(map(int, sys.stdin.readline().rstrip()))
-count = []
+
+now = list(map(bool, (map(int, sys.stdin.readline().rstrip()))))
+target = list(map(bool, (map(int, sys.stdin.readline().rstrip()))))
 
 
-def sol(s):
-    c_s = s[:]
-    press = 0
-    for i in range(1, n-1):
-        if c_s[i-1] != goal[i-1]:
-            c_s[i-1] = 1 - c_s[i-1]
-            c_s[i] = 1 - c_s[i]
-            c_s[i+1] = 1 - c_s[i+1]
-            press += 1
+def switch(li):
+    answer = 0
 
-    if c_s[n-2] != goal[n-2]:
-        c_s[n-2] = 1 - c_s[n-2]
-        c_s[n-1] = 1 - c_s[n-1]
-        press += 1
-    if c_s == goal:
-        return press
+    for i in range(1, n - 1):
+        if li[i - 1] != target[i - 1]:
+            answer += 1
+            li[i - 1] = not li[i - 1]
+            li[i] = not li[i]
+            li[i + 1] = not li[i + 1]
+
+    if li[n - 2] != target[n - 2]:
+        li[n - 2] = not li[n - 2]
+        li[n - 1] = not li[n - 1]
+        answer += 1
+
+    if li == target:
+        return answer
     else:
         return int(1e9)
 
 
-count.append(sol(status))
-status[0] = 1-status[0]
-status[1] = 1-status[1]
-count.append(sol(status)+1)
+tmp = now[:]
 
-answer = min(count)
+# 첫번째 버튼 생략
+result = switch(tmp)
 
-if answer >= int(1e9):
+# 첫번째 버튼 누르고
+now[0] = not now[0]
+now[1] = not now[1]
+result = min(switch(now) + 1, result)
+
+if result == int(1e9):
     print(-1)
 else:
-    print(answer)
+    print(result)
