@@ -8,7 +8,7 @@ answer = 0
 def dfs(idx, cnt, dasom_cnt):
     global answer
     if cnt == 7:
-        if dasom_cnt >= 4 and is_seven_princess():
+        if dasom_cnt >= 4 and is_seven_princess((idx-1)//5,(idx-1)%5):
             answer += 1
         return
     for i in range(idx, 25):
@@ -19,14 +19,12 @@ def dfs(idx, cnt, dasom_cnt):
             dfs(i + 1, cnt + 1, dasom_cnt + int(graph[x][y] == "S"))
             check[x][y] = False
 
-def is_seven_princess():
+def is_seven_princess(i,j):
     dq = deque()
     visit = [[False] * 5 for _ in range(5)]
-    for i in range(25):
-        if check[i // 5][i % 5]:
-            dq.append((i // 5, i % 5))
-            visit[i // 5][i % 5] = True
-            break
+    dq.append((i , j))
+    visit[i][j] = True
+            
 
     cnt = 1
     while dq:
