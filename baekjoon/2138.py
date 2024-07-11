@@ -1,43 +1,35 @@
 import sys
 
+INF = int(1e9)
 n = int(sys.stdin.readline())
+now = list(map(int, sys.stdin.readline().strip()))
+goal = list(map(int, sys.stdin.readline().strip()))
 
-now = list(map(bool, (map(int, sys.stdin.readline().rstrip()))))
-target = list(map(bool, (map(int, sys.stdin.readline().rstrip()))))
-
-
-def switch(li):
-    answer = 0
-
+def flip(l):
+    cnt = 0
     for i in range(1, n - 1):
-        if li[i - 1] != target[i - 1]:
-            answer += 1
-            li[i - 1] = not li[i - 1]
-            li[i] = not li[i]
-            li[i + 1] = not li[i + 1]
-
-    if li[n - 2] != target[n - 2]:
-        li[n - 2] = not li[n - 2]
-        li[n - 1] = not li[n - 1]
-        answer += 1
-
-    if li == target:
-        return answer
+        if l[i - 1] != goal[i - 1]:
+            l[i - 1] = not l[i - 1]
+            l[i] = not l[i]
+            l[i + 1] = not l[i + 1]
+            cnt += 1
+    if l[n - 2] != goal[n - 2]:
+        l[n - 2] = not l[n - 2]
+        l[n - 1] = not l[n - 1]
+        cnt += 1
+    if l[n - 1] != goal[n - 1]:
+        return INF
     else:
-        return int(1e9)
+        return cnt
 
 
-tmp = now[:]
+push_first_switch = now[:]
+push_first_switch[0] = not push_first_switch[0]
+push_first_switch[1] = not push_first_switch[1]
 
-# 첫번째 버튼 생략
-result = switch(tmp)
+answer = min(flip(push_first_switch)+1,flip(now))
 
-# 첫번째 버튼 누르고
-now[0] = not now[0]
-now[1] = not now[1]
-result = min(switch(now) + 1, result)
-
-if result == int(1e9):
+if answer==INF:
     print(-1)
 else:
-    print(result)
+    print(answer)
