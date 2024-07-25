@@ -1,44 +1,42 @@
-import sys
+import sys, heapq
 
-f = sys.stdin.readline
+n, k = map(int, sys.stdin.readline().split())
+li = list(map(int, sys.stdin.readline().split()))
+multitap = set()
+answer = 0
 
-n, m = map(int, f().split())
+def distance(x):
+    hq =[]
+    dist = [300] * (k + 1)
+    if k-1 <x:
+        return
+    for i in range(len(li)-1, x , -1):
+        dist[li[i]] = i - x 
 
-l = list(map(int, f().split()))
+    for i in range(1, k + 1):
+        heapq.heappush(hq, (-dist[i], i))
+    return hq
 
-multi = [0]*(n+1)
-check_multi = [0]*(n+1)
-multi[0] = -1
-check_multi[0] = -1
-cnt = 0
+first = 0
+for i in range(len(li)):
+    if li[i] not in multitap:
+        multitap.add(li[i])
+        first += 1
 
-for i in range(m):
-    if l[i] in multi:
-        continue
+    if first == n:
+        n=i
+        break
+    
 
-    if 0 in multi:
-        idx = multi.index(0)
-        multi[idx] = l[i]
+for i in range(n+1,len(li)):
+    hq = distance(i)
+    if li[i] not in multitap:
+        while True:
+            di, e = heapq.heappop(hq)
+            if  e in multitap:
+                multitap.remove(e)
+                multitap.add(li[i])
+                answer += 1
+                break
 
-    else:
-        if i == m-1:
-            cnt += 1
-            continue
-
-        for j in range(1, n+1):
-            check_multi[j] = l[i+1:].count(multi[j])
-        if 0 in check_multi:
-            multi[check_multi.index(0)] = l[i]
-            cnt += 1
-
-        else:
-            for j in range(1, n+1):
-                check_multi[j] = l[i+1:].index(multi[j])
-
-            tmp = max(check_multi)
-            idx = check_multi.index(tmp)
-            multi[idx] = l[i]
-            cnt += 1
-
-print(cnt)
-
+print(answer)
