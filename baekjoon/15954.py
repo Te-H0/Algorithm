@@ -1,4 +1,4 @@
-import sys, math, numpy
+import sys, math
 answer = []
 n,k = map(int,sys.stdin.readline().split())
 li = list(map(int,sys.stdin.readline().split()))
@@ -11,13 +11,8 @@ def calculator(li,n):
     tmp/=n
     return math.sqrt(tmp)
         
-    
-    
 for i in range(n-k+1):
     for j in range(i+k,n+1):
         l = li[i:j]
         answer.append(calculator(l,j-i))
 print(min(answer))
-        
-        
-        
