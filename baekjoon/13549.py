@@ -1,34 +1,34 @@
 import sys
 from collections import deque
 
+INF = int(1e9)
 n, k = map(int, sys.stdin.readline().split())
-l = [False] * 100001
+visit = [INF] * 100001
+dq = deque()
+dq.append((n, 0))
+visit[n] = 0
 
 
-def bfs():
-    cnt = 0
-    dq = deque()
-    dq.append((n, 0))
-    l[n] = True
-    while dq:
-        x, cnt = dq.popleft()
+while dq:
+    # print(dq)
+    x, t = dq.popleft()
+    if x == k:
+        answer = t
+        while dq:
+            x2, t2 = dq.popleft()
+            if x2 == k:
+                answer = min(answer, t2)
+        print(answer)
+        break
 
-        if x == k:
-            return cnt
+    if 2 * x <= 100000 and visit[2 * x] > t:
+        dq.append((2 * x, t))
+        visit[2 * x] = t
 
-        a = x-1
-        b = x+1
-        c = 2*x
+    if x + 1 <= 100000 and visit[x + 1] > t+1:
+        dq.append((x + 1, t + 1))
+        visit[x + 1] = t+1
 
-        if 0 <= c <= 100000 and l[c] == False:
-            dq.append((c, cnt))
-            l[c] = True
-        if 0 <= a <= 100000 and l[a] == False:
-            dq.append((a, cnt+1))
-            l[a] = True
-        if 0 <= b <= 100000 and l[b] == False:
-            dq.append((b, cnt+1))
-            l[b] = True
-
-
-print(bfs())
+    if 0 <= x - 1 <= 100000 and  visit[x - 1] > t+1:
+        dq.append((x - 1, t + 1))
+        visit[x - 1] = t+1
