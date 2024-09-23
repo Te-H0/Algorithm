@@ -28,10 +28,11 @@ def union_parent(parent, a, b):
 
 def solution(edges):
     result = [0, 0, 0, 0]
-    start_di = defaultdict(list)
-    end_di = defaultdict(list)
+    start_di = defaultdict(list) # start_di[출발노드] = [도착지들]
+    end_di = defaultdict(list) # end_di[도착노드] = [출발지들]
     max_node = 0
-    for edge in edges:
+    
+    for edge in edges: # parent리스트 만들기 위함
         for e in edge:
             max_node = max(e, max_node)
     parent = [-1 for i in range(max_node + 1)]
@@ -40,26 +41,31 @@ def solution(edges):
         start_di[start].append(end)
         end_di[end].append(start)
 
+        # parent는 초기에 -1로 초기화되기 때문에 첫 접근일 때 자신으로 변경해서 존재하는 노드임을 표시
         if parent[start] == -1:
             parent[start] = start
         if parent[end] == -1:
             parent[end] = end
 
+    # 들어오는 간선 없고, 출발하는 간선이 2개이상인 노드는 생성한 노드 (result[0] 값)
     for start, end in start_di.items():
         if len(end_di[start]) == 0 and len(end) >= 2:
             result[0] = start
             break
-    start_di.pop(result[0])
+    start_di.pop(result[0]) # 생성한 노드 제거하면서 관련된 간선 다 제거
 
+    # 그래프 연결하기, 부모가 같으면 같은 그래프
     for start, end in start_di.items():
         for n in end:
             union_parent(parent, start, n)
 
+    # 한번 더 부모 정리하기
     for i in range(1, max_node + 1):
         if i == result[0] or parent[i] == -1:
             continue
         find_parent(parent, i)
     
+    # 같은 부모 갖는 노드들을 같은 그래프라고 저장하기 -> graph_di[부모] = [그래프에 포함되는 노드들]
     graph_di = defaultdict(list)
     for i in range(1, max_node + 1):
         if i == result[0] or parent[i] == -1:
@@ -75,12 +81,12 @@ def solution(edges):
         edge_count = 0
         for c in child:
             edge_count += len(start_di[c])
-        # print(f'parent -> {parent_node}, node -> {total_node_count}, edge -> {edge_count}')
-        if total_node_count == edge_count:
+            
+        if total_node_count == edge_count: # 노드, 간선 수 같으면 도넛 그래프
             doughnut_graph_count += 1
-        elif (total_node_count - 1) // 2 == (edge_count - 2) // 2:
+        elif (total_node_count - 1) // 2 == (edge_count - 2) // 2: # 팔자 그래프
             eight_graph_count += 1
-        else:
+        else: # 나머지는 막대 그래프
             straight_graph_count += 1
 
     result[1] = doughnut_graph_count
