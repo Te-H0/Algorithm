@@ -3,11 +3,12 @@ package baekjoon;
 import java.io.*;
 class Solution  {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        int n = Integer.parseInt(br.readLine()); //배달해야하는 무게가 총 몇 kg
-        br.close();
+        BufferedWriter bw;
+        int n;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            bw = new BufferedWriter(new OutputStreamWriter(System.out));
+            n = Integer.parseInt(br.readLine()); //배달해야하는 무게가 총 몇 kg
+        }
         int answer = 0;
         while(n>0){
             if(n % 5  == 0){ //5로 나누어지면
